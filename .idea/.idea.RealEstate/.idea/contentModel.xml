@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\1olah\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\1olah\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_RealEstate.293218548.00" t="ExcludeRecursive" />
+    <e p="C:\Users\1olah\source\repos\RealEstate" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="RealEstate" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Form1.cs" t="Include" />
+        <e p="Form1.Designer.cs" t="Include" />
+        <e p="Form1.resx" t="Include" />
+        <e p="ItemForm.cs" t="Include" />
+        <e p="ItemForm.Designer.cs" t="Include" />
+        <e p="ItemForm.resx" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+        <e p="RealEstate.csproj" t="IncludeRecursive" />
+        <e p="StringStringObject.cs" t="Include" />
+      </e>
+      <e p="RealEstate.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>
