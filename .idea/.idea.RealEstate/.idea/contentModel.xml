@@ -8,13 +8,17 @@
       <e p="RealEstate" t="IncludeRecursive">
         <e p="App.config" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
+        <e p="configuration.xml" t="Include" />
         <e p="Form1.cs" t="Include" />
         <e p="Form1.Designer.cs" t="Include" />
         <e p="Form1.resx" t="Include" />
+        <e p="FormItem.cs" t="Include" />
         <e p="ItemForm.cs" t="Include" />
         <e p="ItemForm.Designer.cs" t="Include" />
         <e p="ItemForm.resx" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
+        <e p="OneToNQueries.cs" t="Include" />
+        <e p="OneToNTab.cs" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />

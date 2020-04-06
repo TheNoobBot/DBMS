@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <oneToN>
+        <name>Items at property</name>
+        <connection>Data Source=(local)\SQLEXPRESS01;Initial Catalog=PropertyRentalAgencyBeta;Integrated Security=True</connection>
+        <master>
+            <name>Properties</name>
+            <friendlyName>1</friendlyName>
+            <select>
+                <query>Select * from Properties</query>
+            </select>
+        </master>
+
+        <slave>
+            <name>Items at properties:</name>
+            <select>
+                <query>select * from ItemsAtProperty</query>
+            </select>
+            <maxId>
+                <query>SELECT MAX(item_id) FROM ItemsAtProperty</query>
+            </maxId>
+            <getByMaster>
+                <query>Select * from ItemsAtProperty where property_id = {0}</query>
+                <parameters>1</parameters>
+            </getByMaster>
+            <insert>
+                <query>insert ItemsAtProperty values({0}, {1}, '{2}', {3}, '{4}')</query>
+                <parameters>5</parameters>
+            </insert>
+            <update>
+                <query>update ItemsAtProperty set property_id={1}, name='{2}', value={3}, description='{4}' where item_id={0}
+                </query>
+                <parameters>5</parameters>
+            </update>
+            <delete>
+                <query>delete from ItemsAtProperty where item_id={0}</query>
+                <parameters>1</parameters>
+            </delete>
+        </slave>
+    </oneToN>
+
+    <oneToN>
+        <name>Maintenance</name>
+        <connection>Data Source=(local)\SQLEXPRESS01;Initial Catalog=PropertyRentalAgencyBeta;Integrated Security=True</connection>
+        <master>
+            <name>Properties</name>
+            <friendlyName>1</friendlyName>
+            <select>
+                <query>Select * from Properties</query>
+            </select>
+        </master>
+
+        <slave>
+            <name>Maintenance</name>
+            <select>
+                <query>select * from Maintenance</query>
+            </select>
+            <maxId>
+                <query>SELECT MAX(maintenance_id) FROM Maintenance</query>
+            </maxId>
+            <getByMaster>
+                <query>Select * from Maintenance where property_id = {0}</query>
+                <parameters>1</parameters>
+            </getByMaster>
+            <insert>
+                <query>insert Maintenance values({0}, {1}, '{2}', {3})</query>
+                <parameters>4</parameters>
+            </insert>
+            <update>
+                <query>update Maintenance set property_id={1}, maintenance_description='{2}', total_price={3} where maintenance_id={0}
+                </query>
+                <parameters>4</parameters>
+            </update>
+            <delete>
+                <query>delete from Maintenance where maintenance_id={0}</query>
+                <parameters>1</parameters>
+            </delete>
+        </slave>
+    </oneToN>
+</root>

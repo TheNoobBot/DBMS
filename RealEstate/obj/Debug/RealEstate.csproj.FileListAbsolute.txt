@@ -9,3 +9,4 @@ C:\Users\1olah\source\repos\RealEstate\RealEstate\obj\Debug\RealEstate.csproj.Co
 C:\Users\1olah\source\repos\RealEstate\RealEstate\obj\Debug\RealEstate.exe
 C:\Users\1olah\source\repos\RealEstate\RealEstate\obj\Debug\RealEstate.pdb
 C:\Users\1olah\source\repos\RealEstate\RealEstate\obj\Debug\RealEstate.ItemForm.resources
+C:\Users\1olah\source\repos\RealEstate\RealEstate\bin\Debug\configuration.xml

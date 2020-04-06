@@ -10,10 +10,9 @@ namespace RealEstate
     {
         public string String1 { get; set; }
         public string String2 { get; set; }
-           
+
         public StringStringObject()
         {
-
         }
 
         public StringStringObject(string string1, string string2)
