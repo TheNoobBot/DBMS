@@ -68,7 +68,7 @@ namespace RealEstate
             addToMaster.Width = 150;
             addToMaster.Text = "Add";
             addToMaster.Click += addToMasterMethod;
-            
+
             updateSlave.Top = 550;
             updateSlave.Left = 975;
             updateSlave.Height = 30;
@@ -104,7 +104,7 @@ namespace RealEstate
             }
 
             this.nextId = count + 1;
-            
+
             this.Controls.Add(masterLabel);
             this.Controls.Add(slaveLabel);
             this.Controls.Add(masterGridView);
@@ -131,38 +131,98 @@ namespace RealEstate
             this.slaveGridView.DataSource = dataTable;
         }
 
+        // private void addToMasterMethod(object sender, EventArgs e)
+        // {
+        //     List<FormItem> formItems = new List<FormItem>();
+        //     for (int i = 0; i < oneToNQueries.insertSlaveParams; i++)
+        //     {
+        //         if (i != 1)
+        //         {
+        //             Label label = new Label();
+        //             label.Text = slaveGridView.Columns[i].Name;
+        //             TextBox textBox = new TextBox();
+        //             if (i == 0)
+        //             {
+        //                 textBox.ReadOnly = true;
+        //             }
+        //
+        //             formItems.Add(new FormItem(label, textBox));
+        //         }
+        //     }
+        //
+        //     ComboBox comboBox = new ComboBox();
+        //     comboBox.DisplayMember = "String2";
+        //     this.friendlyMaster.ForEach(stringString =>
+        //         comboBox.Items.Add(stringString));
+        //     string master = this.masterGridView.SelectedCells[0].Value.ToString();
+        //     this.friendlyMaster.ForEach(stringString =>
+        //     {
+        //         if (stringString.String1 == master)
+        //             comboBox.SelectedItem = stringString;
+        //     });
+        //     Label masterLabel = new Label();
+        //     masterLabel.Text = slaveGridView.Columns[1].Name;
+        //     ItemForm itemForm = new ItemForm(formItems, masterLabel, comboBox);
+        //     itemForm.ShowDialog();
+        //
+        //     DialogResult dialogResult = itemForm.DialogResult;
+        //     if (dialogResult == DialogResult.OK)
+        //     {
+        //         SqlConnection connection = new SqlConnection(connectionString);
+        //         string format =
+        //             oneToNQueries.insertSlave;
+        //
+        //         SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(oneToNQueries.selectSlave, connection);
+        //         List<string> strings = new List<string>();
+        //         this.nextId++;
+        //         strings.Add(nextId.ToString());
+        //         strings.Add(((StringStringObject) comboBox.SelectedItem).String1);
+        //
+        //         for (int i = 1; i < oneToNQueries.insertSlaveParams - 1; i++)
+        //         {
+        //             strings.Add(formItems[i].textBox.Text);
+        //         }
+        //
+        //         sqlDataAdapter.InsertCommand = new SqlCommand(
+        //             string.Format(format, strings.ToArray()), connection);
+        //         sqlDataAdapter.InsertCommand.Connection = connection;
+        //         connection.Open();
+        //         sqlDataAdapter.InsertCommand.ExecuteNonQuery();
+        //         fillSlaveTable();
+        //     }
+        // }
+
         private void addToMasterMethod(object sender, EventArgs e)
         {
-            
             List<FormItem> formItems = new List<FormItem>();
+            string masterId = "none";
             for (int i = 0; i < oneToNQueries.insertSlaveParams; i++)
             {
-                if (i != 1)
+                Label label = new Label();
+                label.Text = slaveGridView.Columns[i].Name;
+                TextBox textBox = new TextBox();
+                if (i == 0)
                 {
-                    Label label = new Label();
-                    label.Text = slaveGridView.Columns[i].Name;
-                    TextBox textBox = new TextBox();
-                    if (i == 0)
-                    {
-                        textBox.ReadOnly = true;
-                    }
-
-                    formItems.Add(new FormItem(label, textBox));
+                    textBox.ReadOnly = true;
                 }
+                else if (i == 1)
+                {
+                    string master = this.masterGridView.SelectedCells[0].Value.ToString();
+                    this.friendlyMaster.ForEach(stringString =>
+                    {
+                        if (stringString.String1 == master)
+                        {
+                            textBox.Text = stringString.String2;
+                            masterId = stringString.String1;
+                        }
+                    });
+                    textBox.ReadOnly = true;
+                }
+
+                formItems.Add(new FormItem(label, textBox));
             }
-            ComboBox comboBox = new ComboBox();
-            comboBox.DisplayMember = "String2";
-            this.friendlyMaster.ForEach(stringString =>
-                comboBox.Items.Add(stringString));
-            string master = this.masterGridView.SelectedCells[0].Value.ToString();
-            this.friendlyMaster.ForEach(stringString =>
-            {
-                if (stringString.String1 == master)
-                    comboBox.SelectedItem = stringString;
-            });
-            Label masterLabel = new Label();
-            masterLabel.Text = slaveGridView.Columns[1].Name;
-            ItemForm itemForm = new ItemForm(formItems, masterLabel, comboBox);
+
+            ItemForm itemForm = new ItemForm(formItems);
             itemForm.ShowDialog();
 
             DialogResult dialogResult = itemForm.DialogResult;
@@ -171,17 +231,17 @@ namespace RealEstate
                 SqlConnection connection = new SqlConnection(connectionString);
                 string format =
                     oneToNQueries.insertSlave;
-                
+
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(oneToNQueries.selectSlave, connection);
                 List<string> strings = new List<string>();
                 this.nextId++;
                 strings.Add(nextId.ToString());
-                strings.Add(((StringStringObject)comboBox.SelectedItem).String1);
-                
-                for (int i = 1; i < oneToNQueries.insertSlaveParams - 1; i++)
+                strings.Add(masterId);
+                for (int i = 2; i < oneToNQueries.insertSlaveParams; i++)
                 {
                     strings.Add(formItems[i].textBox.Text);
                 }
+
                 sqlDataAdapter.InsertCommand = new SqlCommand(
                     string.Format(format, strings.ToArray()), connection);
                 sqlDataAdapter.InsertCommand.Connection = connection;
@@ -193,37 +253,36 @@ namespace RealEstate
 
         private void updateSlaveMethod(object sender, EventArgs e)
         {
-            
             List<FormItem> formItems = new List<FormItem>();
+            string masterId = "none";
             for (int i = 0; i < oneToNQueries.insertSlaveParams; i++)
             {
-                if (i != 1)
+                Label label = new Label();
+                label.Text = slaveGridView.Columns[i].Name;
+                TextBox textBox = new TextBox();
+                textBox.Text = slaveGridView.SelectedCells[i].Value.ToString();
+                if (i == 0)
                 {
-                    Label label = new Label();
-                    label.Text = slaveGridView.Columns[i].Name;
-                    TextBox textBox = new TextBox();
-                    textBox.Text = slaveGridView.SelectedCells[i].Value.ToString();
-                    if (i == 0)
-                    {
-                        textBox.ReadOnly = true;
-                    }
-                    formItems.Add(new FormItem(label, textBox));
+                    textBox.ReadOnly = true;
                 }
+                else if (i == 1)
+                {
+                    string master = this.masterGridView.SelectedCells[0].Value.ToString();
+                    this.friendlyMaster.ForEach(stringString =>
+                    {
+                        if (stringString.String1 == master)
+                        {
+                            textBox.Text = stringString.String2;
+                            masterId = stringString.String1;
+                        }
+                    });
+                    textBox.ReadOnly = true;
+                }
+
+                formItems.Add(new FormItem(label, textBox));
             }
-            ComboBox comboBox = new ComboBox();
-            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox.DisplayMember = "String2";
-            this.friendlyMaster.ForEach(stringString =>
-                comboBox.Items.Add(stringString));
-            string master = this.masterGridView.SelectedCells[0].Value.ToString();
-            this.friendlyMaster.ForEach(stringString =>
-            {
-                if (stringString.String1 == master)
-                    comboBox.SelectedItem = stringString;
-            });
-            Label masterLabel = new Label();
-            masterLabel.Text = slaveGridView.Columns[1].Name;
-            ItemForm itemForm = new ItemForm(formItems, masterLabel, comboBox);
+
+            ItemForm itemForm = new ItemForm(formItems);
             itemForm.ShowDialog();
 
             DialogResult dialogResult = itemForm.DialogResult;
@@ -232,13 +291,18 @@ namespace RealEstate
                 SqlConnection connection = new SqlConnection(connectionString);
                 string format =
                     oneToNQueries.updateSlave;
-                
+
                 List<string> strings = new List<string>();
-                strings.Add(formItems[0].textBox.Text);
-                strings.Add(((StringStringObject)comboBox.SelectedItem).String1);
-                for (int i = 1; i < oneToNQueries.insertSlaveParams-1; i++)
+                for (int i = 0; i < oneToNQueries.insertSlaveParams; i++)
                 {
-                    strings.Add(formItems[i].textBox.Text);
+                    if (i != 1)
+                    {
+                        strings.Add(formItems[i].textBox.Text);
+                    }
+                    else
+                    {
+                        strings.Add(masterId);
+                    }
                 }
 
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(oneToNQueries.selectSlave, connection);
